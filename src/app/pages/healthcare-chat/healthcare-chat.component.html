@@ -1,122 +1,161 @@
 <!-- Healthcare Chat Component HTML -->
-<div class="bg-gradient-to-br from-blue-50 to-gray-100 h-screen flex flex-col font-sans antialiased">
-    <!-- Full-width header -->
-    <header class="w-full bg-white shadow-md px-6 py-4">
-      <div class="container mx-auto flex items-center justify-between">
+<div class="bg-white h-screen flex flex-col font-sans antialiased">
+  <!-- Sidebar and Main Content Layout -->
+  <div class="flex h-full">
+    <!-- Sidebar -->
+    <div class="w-64 bg-gray-50 border-r border-gray-200 flex flex-col">
+      <!-- Brand/Logo -->
+      <div class="p-4 border-b border-gray-200">
         <div class="flex items-center">
-          <div class="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
+          <div class="h-8 w-8 rounded bg-blue-500 flex items-center justify-center text-white">
             <i class="fas fa-robot"></i>
           </div>
-          <h1 class="ml-3 text-xl font-semibold text-gray-800">MediGo AI</h1>
-        </div>
-        <div class="flex items-center">
-          <div class="h-3 w-3 bg-green-400 rounded-full pulse mr-2"></div>
-          <span class="text-sm text-gray-600">Online</span>
+          <h1 class="ml-3 text-lg font-medium text-gray-800">MediGo AI</h1>
         </div>
       </div>
-    </header>
-  
-    <!-- Main content area - full screen width -->
-    <div class="flex-1 w-full container mx-auto px-4 py-4">
-      <!-- Chat Messages -->
-      <div class="bg-white shadow-lg rounded-xl p-4 h-3/4 overflow-y-auto mb-4" style="max-height: 63vh;" #chatWindow>
-        <div class="space-y-4">
-          <div class="flex items-start animate-fadeIn">
-            <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-2">
-              <i class="fas fa-robot text-xs"></i>
-            </div>
-            <div class="bg-blue-100 text-gray-800 px-4 py-3 rounded-lg max-w-xs lg:max-w-md message-bubble shadow-sm">
-              <p class="text-sm">Hello! I'm your Healthcare Assistant. How can I help you today? You can ask
-                me about common health conditions, symptoms, or medical advice.</p>
-            </div>
-          </div>
-          
-          <!-- Messages will be dynamically inserted here -->
-          <div *ngFor="let msg of messages">
-            <!-- AI Message -->
-            <div *ngIf="msg.sender === 'ai'" class="flex items-start animate-fadeIn">
-              <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-2">
-                <i class="fas fa-robot text-xs"></i>
-              </div>
-              <div class="bg-blue-100 text-gray-800 px-4 py-3 rounded-lg max-w-xs lg:max-w-md message-bubble shadow-sm">
-                <p class="text-sm">{{ msg.text }}</p>
-              </div>
-            </div>
-            
-            <!-- User Message -->
-            <div *ngIf="msg.sender === 'user'" class="flex items-start justify-end animate-fadeIn">
-              <div class="bg-gray-100 text-gray-800 px-4 py-3 rounded-lg max-w-xs lg:max-w-md shadow-sm">
-                <p class="text-sm">{{ msg.text }}</p>
-              </div>
-              <div class="h-8 w-8 rounded-full bg-gray-500 flex items-center justify-center text-white ml-2">
-                <i class="fas fa-user text-xs"></i>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Typing indicator -->
-          <div *ngIf="isTyping" id="typing-indicator" class="flex items-start animate-fadeIn">
-            <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-2">
-              <i class="fas fa-robot text-xs"></i>
-            </div>
-            <div class="bg-blue-100 text-gray-800 px-4 py-3 rounded-lg message-bubble shadow-sm">
-              <div class="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
-  <!-- Doctor Card -->
-  <button class="category-button bg-white shadow-md rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 hover:shadow-lg hover:scale-105 hover:bg-blue-50 group">
-    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 transition-colors category-icon">
-      <i class="fas fa-user-md text-blue-500 group-hover:text-white transition-colors"></i>
-    </div>
-    <span class="text-sm text-gray-700 group-hover:text-blue-600 transition-colors category-text">Doctor</span>
-  </button>
-
-  <!-- Pharmacy Card -->
-  <button class="category-button bg-white shadow-md rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 hover:shadow-lg hover:scale-105 hover:bg-blue-50 group">
-    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 transition-colors category-icon">
-      <i class="fas fa-pills text-blue-500 group-hover:text-white transition-colors"></i>
-    </div>
-    <span class="text-sm text-gray-700 group-hover:text-blue-600 transition-colors category-text">Pharmacy</span>
-  </button>
-
-  <!-- Lab Tests Card -->
-  <button class="category-button bg-white shadow-md rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 hover:shadow-lg hover:scale-105 hover:bg-blue-50 group">
-    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 transition-colors category-icon">
-      <i class="fas fa-vial text-blue-500 group-hover:text-white transition-colors"></i>
-    </div>
-    <span class="text-sm text-gray-700 group-hover:text-blue-600 transition-colors category-text">Lab Tests</span>
-  </button>
-
-  <!-- Emergency Card -->
-  <button class="category-button bg-white shadow-md rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 hover:shadow-lg hover:scale-105 hover:bg-blue-50 group">
-    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 transition-colors category-icon">
-      <i class="fas fa-ambulance text-blue-500 group-hover:text-white transition-colors"></i>
-    </div>
-    <span class="text-sm text-gray-700 group-hover:text-blue-600 transition-colors category-text">Emergency</span>
-  </button>
-</div>
-
-  
-      <!-- Input Box with internal send button -->
-      <div class="chat-input-container mt-2">
-        <input 
-          #chatInput
-           
-          type="text" 
-          class="chat-input w-full p-3 rounded-lg outline-none"
-          placeholder="Type your message..."
-          >
-        <button class="send-button flex items-center justify-center shadow-sm">
-          <i class="fas fa-paper-plane"></i>
+      
+      <!-- New Chat Button -->
+      <div class="p-4">
+        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 flex items-center justify-center transition-colors">
+          <i class="fas fa-plus mr-2"></i>
+          New Chat
         </button>
+      </div>
+      
+      <!-- Recent Conversations -->
+      <div class="flex-1 overflow-y-auto p-2">
+        <div class="text-xs text-gray-500 px-2 py-1 uppercase font-medium">Recent chats</div>
+        <div class="space-y-1 mt-1">
+          <div class="px-2 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-gray-700 text-sm">
+            <div class="flex items-center">
+              <i class="fas fa-comment-medical mr-2 text-gray-400"></i>
+              <span class="truncate">Medical Advice</span>
+            </div>
+          </div>
+          <div class="px-2 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-gray-700 text-sm">
+            <div class="flex items-center">
+              <i class="fas fa-pills mr-2 text-gray-400"></i>
+              <span class="truncate">Medication Questions</span>
+            </div>
+          </div>
+          <div class="px-2 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-gray-700 text-sm">
+            <div class="flex items-center">
+              <i class="fas fa-heartbeat mr-2 text-gray-400"></i>
+              <span class="truncate">Health Checkup</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- User Profile -->
+      <div class="p-3 border-t border-gray-200">
+        <div class="flex items-center">
+          <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="ml-2">
+            <div class="text-sm font-medium text-gray-700">John Doe</div>
+            <div class="text-xs text-gray-500">Premium Member</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Chat Area -->
+    <div class="flex-1 flex flex-col">
+      <!-- Chat Messages -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-5">
+        <!-- AI Message -->
+        <div class="flex items-start max-w-3xl mx-auto w-full">
+          <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-3 flex-shrink-0">
+            <i class="fas fa-robot text-xs"></i>
+          </div>
+          <div class="text-gray-800 space-y-2 flex-1">
+            <p class="text-sm">Hello! I'm your Healthcare Assistant. How can I help you today? You can ask
+              me about common health conditions, symptoms, or medical advice.</p>
+          </div>
+        </div>
+        
+        <!-- User Message -->
+        <div class="flex items-start max-w-3xl mx-auto w-full">
+          <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-3 flex-shrink-0">
+            <i class="fas fa-user text-xs"></i>
+          </div>
+          <div class="text-gray-800 space-y-2 flex-1">
+            <p class="text-sm">I've been experiencing frequent headaches lately, especially in the morning. What could be causing this?</p>
+          </div>
+        </div>
+        
+        <!-- AI Message -->
+        <div class="flex items-start max-w-3xl mx-auto w-full">
+          <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-3 flex-shrink-0">
+            <i class="fas fa-robot text-xs"></i>
+          </div>
+          <div class="text-gray-800 space-y-2 flex-1">
+            <p class="text-sm">Morning headaches can be caused by several factors:</p>
+            <ul class="text-sm list-disc pl-5 space-y-1">
+              <li>Poor sleep quality or sleep disorders like sleep apnea</li>
+              <li>Dehydration, especially if you don't drink enough water before bed</li>
+              <li>Caffeine withdrawal if you regularly consume caffeine</li>
+              <li>Stress or tension that builds up overnight</li>
+              <li>Grinding teeth during sleep</li>
+            </ul>
+            <p class="text-sm mt-2">Could you share more details about your sleep habits and lifestyle? This would help me provide more targeted advice.</p>
+          </div>
+        </div>
+        
+        <!-- Typing indicator -->
+        <div class="flex items-start max-w-3xl mx-auto w-full opacity-75">
+          <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-3 flex-shrink-0">
+            <i class="fas fa-robot text-xs"></i>
+          </div>
+          <div class="text-gray-800 flex-1">
+            <div class="flex space-x-1 items-center">
+              <div class="h-2 w-2 bg-gray-300 rounded-full animate-pulse"></div>
+              <div class="h-2 w-2 bg-gray-300 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+              <div class="h-2 w-2 bg-gray-300 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Input Area -->
+      <div class="border-t border-gray-200 p-4">
+        <div class="max-w-3xl mx-auto">
+          <div class="flex items-center space-x-2">
+            <button class="text-gray-400 hover:text-gray-600 p-2 rounded-md hover:bg-gray-100">
+              <i class="fas fa-camera"></i>
+            </button>
+            <button class="text-gray-400 hover:text-gray-600 p-2 rounded-md hover:bg-gray-100">
+              <i class="fas fa-microphone-alt"></i>
+            </button>
+            <div class="flex-1 relative">
+              <input type="text" 
+                     class="w-full border border-gray-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                     placeholder="Message MediGo AI...">
+              <button class="absolute right-2 top-8 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Quick Actions -->
+          <div class="flex justify-center mt-3 space-x-2">
+            <button class="bg-gray-100 text-gray-600 hover:bg-gray-200 text-xs py-1 px-3 rounded-full flex items-center">
+              <i class="fas fa-check-circle mr-1"></i>
+              Symptom Check
+            </button>
+            <button class="bg-gray-100 text-gray-600 hover:bg-gray-200 text-xs py-1 px-3 rounded-full flex items-center">
+              <i class="fas fa-bolt mr-1"></i>
+              Quick Advice
+            </button>
+            <button class="bg-red-100 text-red-600 hover:bg-red-200 text-xs py-1 px-3 rounded-full flex items-center">
+              <i class="fas fa-ambulance mr-1"></i>
+              Emergency
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
