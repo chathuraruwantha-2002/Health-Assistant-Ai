@@ -16,7 +16,8 @@
       
       <!-- New Chat Button -->
       <div class="p-4">
-        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 flex items-center justify-center transition-colors">
+        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 flex items-center justify-center transition-colors"
+                (click)="startNewChat()">
           <i class="fas fa-plus mr-2"></i>
           New Chat
         </button>
@@ -54,7 +55,7 @@
             <i class="fas fa-user"></i>
           </div>
           <div class="ml-2">
-            <div class="text-sm font-medium text-gray-700">John Doe</div>
+            <div class="text-sm font-medium text-gray-700">Chathura Ruwantha</div>
             <div class="text-xs text-gray-500">Premium Member</div>
           </div>
         </div>
@@ -65,47 +66,19 @@
     <div class="flex-1 flex flex-col">
       <!-- Chat Messages -->
       <div class="flex-1 overflow-y-auto p-4 space-y-5">
-        <!-- AI Message -->
-        <div class="flex items-start max-w-3xl mx-auto w-full">
-          <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-3 flex-shrink-0">
-            <i class="fas fa-robot text-xs"></i>
+        <!-- AI and User Messages -->
+        <div *ngFor="let message of chatHistory" class="flex items-start max-w-3xl mx-auto w-full">
+          <div [ngClass]="message.role === 'ai' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-500'" 
+               class="h-8 w-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+            <i [ngClass]="message.role === 'ai' ? 'fas fa-robot' : 'fas fa-user'" class="text-xs"></i>
           </div>
           <div class="text-gray-800 space-y-2 flex-1">
-            <p class="text-sm">Hello! I'm your Healthcare Assistant. How can I help you today? You can ask
-              me about common health conditions, symptoms, or medical advice.</p>
-          </div>
-        </div>
-        
-        <!-- User Message -->
-        <div class="flex items-start max-w-3xl mx-auto w-full">
-          <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-3 flex-shrink-0">
-            <i class="fas fa-user text-xs"></i>
-          </div>
-          <div class="text-gray-800 space-y-2 flex-1">
-            <p class="text-sm">I've been experiencing frequent headaches lately, especially in the morning. What could be causing this?</p>
-          </div>
-        </div>
-        
-        <!-- AI Message -->
-        <div class="flex items-start max-w-3xl mx-auto w-full">
-          <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-3 flex-shrink-0">
-            <i class="fas fa-robot text-xs"></i>
-          </div>
-          <div class="text-gray-800 space-y-2 flex-1">
-            <p class="text-sm">Morning headaches can be caused by several factors:</p>
-            <ul class="text-sm list-disc pl-5 space-y-1">
-              <li>Poor sleep quality or sleep disorders like sleep apnea</li>
-              <li>Dehydration, especially if you don't drink enough water before bed</li>
-              <li>Caffeine withdrawal if you regularly consume caffeine</li>
-              <li>Stress or tension that builds up overnight</li>
-              <li>Grinding teeth during sleep</li>
-            </ul>
-            <p class="text-sm mt-2">Could you share more details about your sleep habits and lifestyle? This would help me provide more targeted advice.</p>
+            <div [innerHTML]="message.content | formatMessageContent"></div>
           </div>
         </div>
         
         <!-- Typing indicator -->
-        <div class="flex items-start max-w-3xl mx-auto w-full opacity-75">
+        <div *ngIf="isTyping" class="flex items-start max-w-3xl mx-auto w-full opacity-75">
           <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-3 flex-shrink-0">
             <i class="fas fa-robot text-xs"></i>
           </div>
@@ -131,9 +104,12 @@
             </button>
             <div class="flex-1 relative">
               <input type="text" 
+                     [(ngModel)]="userMessage"
+                     (keyup.enter)="sendMessage()"
                      class="w-full border border-gray-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                      placeholder="Message MediGo AI...">
-              <button class="absolute right-2 top-8 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <button class="absolute right-2 top-8 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      (click)="sendMessage()">
                 <i class="fas fa-paper-plane"></i>
               </button>
             </div>
