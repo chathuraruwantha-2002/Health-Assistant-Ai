@@ -14,7 +14,7 @@ import { FormatMessageContentPipe } from '../format-message-content.pipe';
 export class HealthcareChatComponent {
   userMessage = '';
   chatHistory: {role: 'user' | 'ai', content: string}[] = [
-    {role: 'ai', content: 'Hello! I\'m your Healthcare Assistant. How can I help you today? You can ask me about common health conditions, symptoms, or medical advice.'}
+    {role: 'ai', content: 'Hello! I\'m MediGo your Healthcare Assistant. How can I help you today?'}
   ];
   isTyping = false;
 
@@ -48,7 +48,7 @@ export class HealthcareChatComponent {
 
   startNewChat() {
     this.chatHistory = [
-      {role: 'ai', content: 'Hello! I\'m your Healthcare Assistant. How can I help you today? You can ask me about common health conditions, symptoms, or medical advice.'}
+      {role: 'ai', content: 'Hello! I\'m MediGo, your Healthcare Assistant. How can I help you today?'}
     ];
   }
 }

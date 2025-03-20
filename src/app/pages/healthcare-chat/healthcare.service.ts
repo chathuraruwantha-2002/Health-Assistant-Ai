@@ -20,7 +20,7 @@ export class HealthcareService {
     "rash": "Rashes can be caused by allergies, infections, or skin conditions. For mild rashes, avoid irritants and try over-the-counter hydrocortisone cream. If a rash is widespread, painful, accompanied by fever, or doesn't improve, consult a healthcare provider.",
     "allergies": "Allergies occur when your immune system reacts to a foreign substance. Symptoms may include sneezing, itching, or rashes. Avoiding triggers and taking antihistamines can help manage symptoms. For severe allergic reactions, seek immediate medical attention.",
     "asthma": "Asthma is a condition in which your airways narrow and swell, producing extra mucus. This can make breathing difficult and trigger coughing, wheezing, and shortness of breath. Follow your asthma action plan and use prescribed inhalers. Seek immediate help if experiencing severe breathing difficulties.",
-
+    
     // Blood pressure related
     "blood pressure": "Normal blood pressure is below 120/80 mmHg. High blood pressure (hypertension) is 130/80 mmHg or higher. To maintain healthy blood pressure: exercise regularly, eat a balanced diet low in sodium, limit alcohol, maintain a healthy weight, and manage stress.",
     "hypertension": "Hypertension (high blood pressure) is a common condition where blood pressure against artery walls is consistently too high. It often has no symptoms but can lead to serious health problems. Management includes lifestyle changes and sometimes medications. Regular monitoring is important.",

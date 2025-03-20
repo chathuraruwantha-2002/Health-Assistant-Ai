@@ -14,7 +14,7 @@ export class FormatMessageContentPipe implements PipeTransform {
         if (content.includes('<ul>') || content.includes('<p>')) {
             return this.sanitizer.bypassSecurityTrustHtml(content);
         }
-        return this.sanitizer.bypassSecurityTrustHtml(`<p class="text-sm">${content}</p>`);
+        return this.sanitizer.bypassSecurityTrustHtml(`<p class="text-base leading-relaxed text-gray-800">${content}</p>`);
     }
     
 }
